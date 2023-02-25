@@ -1,0 +1,151 @@
+# To install required packages in virtual environment:
+# cd this_repo
+# python3 -m venv venv
+# source venv/bin/activate
+# pip install -r src/requirements.txt
+# save requirements with package versions: pip freeze > official_requirements.txt
+
+# On setting up PyCharm wiht virtualenv: https://stackoverflow.com/questions/33868806/configuring-pycharm-with-existing-virtualenv
+# To rename folders: https://askubuntu.com/questions/643098/recursive-directory-renaming
+
+# To solve problems with virtualenv and matplotlib in Mac OS, either do:
+# https://markhneedham.com/blog/2018/05/04/python-runtime-error-osx-matplotlib-not-installed-as-framework-mac/
+# but does not seem to work (fixes error but figures are all black), or with
+# Python3 simply use venv (newer) instead of virtualenv which builds python as a
+# framework: https://docs.python.org/3/library/venv.html
+# Further: https://github.com/matplotlib/matplotlib/issues/12074
+
+# If no plots showing: sudo apt-get install python3-tk
+# import matplotlib
+# matplotlib.use('TkAgg')
+
+numpy
+scipy
+matplotlib==3.4.3
+pandas
+seaborn
+jupyter
+scikit-learn
+dill
+control
+#slycot
+pickle5
+
+# Install GPyTorch
+torch
+gpytorch
+torchdiffeq
+tqdm
+
+# Install GPy: https://github.com/SheffieldML/GPy
+# Workaround the build fails errors (after installing cython with pip and doing
+# pip freeze — local | grep -v ‘^\-e’ | cut -d = -f 1 | xargs -n1 pip install -U to update all packages):
+# https://github.com/SheffieldML/GPy/issues/649
+# On Windows if problem building GPy because rc.exe is not found:
+# follow https://stackoverflow.com/questions/14372706/visual-studio-cant-build-due-to-rc-exe
+# or equivalent (problem with Visual Studio)
+# To use multivariate Gaussian priors: replace the class MultivariateGaussian in
+# ../venv/lib/python3.7/site-packages/GPy/core/parameterization/priors.py
+# with the class MultivariateGaussian from our src/priors.py file or use latest
+# version of GPy from devel branch
+#GPy
+git+https://github.com/SheffieldML/GPy.git@devel  # for latest version of GPy!
+
+# Install https://github.com/aliutkus/torchinterp1d for interpolation with
+# pytorch
+# cd ../ from src
+# git clone https://github.com/aliutkus/torchinterp1d
+# cd torchinterp1d
+# pip install -e .
+
+# Install PyFMI https://pypi.org/project/PyFMI/
+# Needs prior install of cython and FMI Library: https://jmodelica.org/FMILibrary/
+# https://stackoverflow.com/questions/40156622/importing-libraries
+# export FMIL_HOME=$HOME/build-fmil/2.0.3/ in terminal before installing pyfmi
+# Needs prior install of GCC and OMP, in Mac through brew install gcc and brew
+# install libomp. Example usage https://jmodelica.org/pyfmi/tutorial.html
+#pyfmi
+
+cython
+prettytable
+
+# Need prerequisites first: https://www.kernel-operations.io/keops/python/installation.html#part-checkpython
+# On macOS install Xcode developer tools: xcode-select --install
+# Install compatible versions of gcc, clang, g++, clang++ (compatible with nvcc --version) first
+# Eventually handle multiple versions with update-alternatives: https://stackoverflow.com/questions/7832892/how-to-change-the-default-gcc-compiler-in-ubuntu
+# Install OpenSSL: sudo apt-get install libssl-dev
+# Install cmake https://askubuntu.com/questions/829310/how-to-upgrade-cmake-in-ubuntu
+pykeops
+
+pytorch-lightning
+tensorflow
+# tensorboard for visualization is included in pytorch-lightning, but seems to
+# have problems without tensorflow installed
+# if not found/problems, try: https://stackoverflow.com/questions/45095820/tensorboard-command-not-found
+# also try switching browsers/enabling cookies: Firefox seems best...
+
+# We actually don't use torchdyn, so we are independent from their releases!
+# torchdyn temporarily first requires
+# pip install git+https://github.com/google-research/torchsde.git
+# creates clash with torch version, fix with specific versions
+# pip install torchtext==0.8.1
+# pip install torchvision==0.8.2
+#torchcde
+#torchdyn==1.0.1
+
+# https://smt.readthedocs.io/en/latest/index.html
+smt
+
+# Pytorch version of scipy optimize?
+# https://pytorch-minimize.readthedocs.io/en/latest/install.html
+# cd ../ from src
+# git clone https://github.com/rfeinman/pytorch-minimize.git
+
+functorch
+# https://pytorch.org/functorch/stable/notebooks/jacobians_hessians.html
+# https://github.com/pytorch/functorch#what-are-the-transforms
+
+
+# To run experiments on Google colab using https://pypi.org/project/colab-ssh/:
+# pip install colab_ssh
+# follow instructions for installation:
+# github page + https://github.com/WassimBenzarti/colab-ssh/issues/69
+# brew install cloudflare/cloudflare/cloudflared
+# cloudflared tunnel login
+# create account in browser
+# ssh config entry needed after this (nano ~.ssh/config):
+# Host *.trycloudflare.com
+#         HostName %h
+#         User root
+#         Port 22
+#         ProxyCommand cloudflared access ssh --hostname %h
+# the clone this repo as instructed in colab_ssh in any notebook, and use
+# regular command line in notebook cells to navigate, pip install, python ...
+# To transfer data back and forth:
+# https://neptune.ai/blog/google-colab-dealing-with-files
+# For file download use Google Chrome, safari not working...
+
+
+# To run experiments on the Tuebingen cluster:
+# ssh buissonfenet@login.cluster.is.localnet + usual campus password
+# You are in your home directory, and can copy files back and forth from your local computer.
+# To do that with the GUI: open file system, click other location, type sftp://buissonfenet@login.cluster.is.localnet
+# There you can see your cluster home and its contents, and copy scripts and data back and forth
+# Wiki on how to use the cluster and launch jobs: https://atlas.is.localnet/confluence/display/IT/Cluster+Introduction,
+# use condor_submit_bid 10 <file>.sub
+# Software already on the cluster can be seen at /is/software, and includes MuJoCo
+# To use it you must do export LD_LIBRARY_PATH=/is/software/mujoco/linux/mujoco200/bin$LD_LIBRARY_PATH,
+# export MUJOCO_PY_MJKEY_PATH=/is/software/mujoco/linux/mujoco200/bin/mjkey.txt,
+# and export MUJOCO_PY_MUJOCO_PATH=/is/software/mujoco/linux/mujoco200
+# My submission files are in a cluster_submissions folder, they can be run
+# directly from src with condor_submit_bid 50 cluster_submissions/<file>.sub.
+# They use bash as executable and call a /<file>.sh file that sources the
+# virtual env, exports the necessary global variables, then calls the
+# corresponding python script.
+# On the cluster, rather launch 100 short jobs with 1 core each than 1 long job
+# with 100 cores, queue system will take care of parallelization and all
+# starting them one after the other! Have scripts that are fixed and do not
+# change (since do not know when and therefore which version cluster will use
+# when job actually runs); if parameters need to be set then pass them as
+# arguments to python script, and have several python scripts one for each
+# method to test, then just change which python script is called by sub file!
