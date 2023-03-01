@@ -4,16 +4,18 @@
 
 - create a directory for this repo, further named dir
 - create dir/Figures/Logs
-- clone the repo in dir/repo 
+- clone the repo in dir/repo
 - unzip the data files and move them to dir/Data/...
-- create a python3 virtual environment with **Python 3.9.16** for this repo in 
-  dir/venv, source it
+- create a **Python 3.9.16** virtual environment for this repo in 
+  dir/venv, source it (for example with `python3.9 -m venv venv`)
 - install all requirements with pip: `pip install -r repo/official_requirements.txt`
 - if any problems occur during the installation of required packages, see
   requirements.txt for possible fixes
 - install interpolation repo: `git clone https://github.
-  com/aliutkus/torchinterp1d` into dir, `cd torchinterp1d`, `pip install -e .`
-- cd repo, run `python mass_spring_mass_testcase/MSM_observer_GP.py 1` (1 =
+  com/aliutkus/torchinterp1d` into dir, `cd torchinterp1d`, `pip install -e .
+  `, then `git checkout a29661bae59e8b3db6ec272eeaddff256026f383` to go back 
+  to the commit corresponding to the versions in the requirements
+- `cd ../repo`, run `python mass_spring_mass_testcase/MSM_observer_GP.py 1` (1 =
   process number, used for logging)
 
 ## Content
